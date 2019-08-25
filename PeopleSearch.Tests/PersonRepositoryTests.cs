@@ -37,12 +37,12 @@ namespace PeopleSearch.Tests
         [TestMethod]
         public void Get_ReturnsInterests()
         {
-            List<PersonInterest> interests = _repository.GetInterests(1);
+            List<Interest> interests = _repository.GetInterests(1);
             var originalInterests = new List<string>();
 
             foreach (var item in interests)
             {
-                originalInterests.Add(item.Interest.Title);
+                originalInterests.Add(item.Title);
             }
 
             Assert.AreEqual(originalInterests.Contains("Books"), true);

@@ -32,6 +32,11 @@ namespace PeopleSearch
                 .HasOne<Interest>(e => e.Interest)
                 .WithMany(p => p.PersonInterests);
 
+            modelBuilder.Entity<Person>()
+                .HasOne<Address>(p => p.Address)
+                .WithOne(s => s.Person)
+                .HasForeignKey<Person>(ad => ad.PersonId);
+
             var interest1 = new Interest
             {
                 InterestId = 1,

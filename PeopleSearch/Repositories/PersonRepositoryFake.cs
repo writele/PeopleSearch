@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PeopleSearch.Repositories
 {
-    public class PersonRepositoryFake
+    public class PersonRepositoryFake : IPersonRepository
     {
         private readonly List<Person> _persons;
         private readonly List<Address> _addresses;
@@ -121,9 +121,20 @@ namespace PeopleSearch.Repositories
             return _persons.Where(x => x.PersonId == id).FirstOrDefault();
         }
 
-        public List<PersonInterest> GetInterests(int id)
+        public List<Interest> GetInterests(int id)
         {
-            return _personinterests.Where(x => x.PersonId == id).ToList<PersonInterest>();
+            return _persons
+                .Where(p => p.PersonId == id)
+                .SelectMany(p => p.PersonInterests)
+                .Select(pc => pc.Interest)
+                .ToList();
+        }
+
+        public Address GetAddress(int id)
+        {
+            return _addresses
+                .Where(x => x.Id == id)
+                .FirstOrDefault();
         }
 
         public List<Person> GetAll()

@@ -5,9 +5,20 @@ using System.Threading.Tasks;
 
 namespace PeopleSearch.Models
 {
-    public class Address
+    public class PersonViewModel
     {
-        public int Id { get; set; }
+        public PersonViewModel()
+        {
+            this.Interests = new List<string>();
+        }
+
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
+        public int Age { get; set; }
+
+        public string ImageUrl { get; set; }
 
         public string Address1 { get; set; }
 
@@ -19,6 +30,6 @@ namespace PeopleSearch.Models
 
         public int? ZipCode { get; set; }
 
-        public virtual Person Person { get; set; }
+        public List<string> Interests { get; set; }
     }
 }

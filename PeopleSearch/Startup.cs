@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PeopleSearch.Repositories;
 
 namespace PeopleSearch
 {
@@ -29,6 +30,8 @@ namespace PeopleSearch
             {
                 options.UseSqlServer(Configuration.GetConnectionString("PersonSearchDb"));
             });
+
+            services.AddTransient<IPersonRepository, PersonRepository>();
 
             services.Configure<CookiePolicyOptions>(options =>
             {
