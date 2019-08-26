@@ -52,8 +52,7 @@ namespace PeopleSearch.Tests
         [TestMethod]
         public void Get_ReturnsAddress()
         {
-            Person personTest = _repository.Get(1);
-            var originalAddress = personTest.Address;
+            Address originalAddress = _repository.GetAddress(1);
             var testAddress = new Address
             {
                 Id = 1,
@@ -87,32 +86,7 @@ namespace PeopleSearch.Tests
         [TestMethod]
         public void Add_CreatesNewPerson()
         {
-            var person = new Person
-            {
-                PersonId = 3,
-                FirstName = "Diana",
-                LastName = "Prince",
-                Age = 54,
-                AddressId = 3,
-                ImageUrl = "~/images/dprince.jpg"
-            };
-
-            var address = new Address
-            {
-                Id = 3,
-                Address1 = "1200 Main Ave.",
-                Address2 = "Suite 300",
-                City = "New York City",
-                State = "NY",
-                ZipCode = 72172
-            };
-
-            var interests = new List<Interest>() {
-                new Interest() { InterestId = 2 },
-                new Interest() { InterestId = 3 }
-            };
-
-            _repository.Add(person, address, interests);
+           _repository.Add(CreatePersonViewModel());
             var persons = _repository.GetAll();
 
             Assert.AreEqual(persons.Count, 3);
@@ -121,33 +95,48 @@ namespace PeopleSearch.Tests
         [TestMethod]
         public void Add_InvalidValues_DoesNotCreateNewPerson()
         {
-            var person = new Person
-            {
-                PersonId = 4,
-                Age = 27,
-                AddressId = 4,
-                ImageUrl = "~/images/bgordon.jpg"
-            };
-
-            var address = new Address
-            {
-                Id = 4,
-                Address2 = "Suite 300",
-                City = "New York City",
-                State = "NY",
-                ZipCode = 72172
-            };
-
-            var interests = new List<Interest>() {
-                new Interest() { InterestId = 2 },
-                new Interest() { InterestId = 3 }
-            };
-
-            var newPerson = _repository.Add(person, address, interests);
+            var newPerson = _repository.Add(CreateInvalidPersonViewModel());
             var persons = _repository.GetAll();
 
             Assert.AreEqual(newPerson, null);
             Assert.AreEqual(persons.Count, 2);
+        }
+
+        public PersonViewModel CreatePersonViewModel()
+        {
+            var model = new PersonViewModel();
+
+            model.FirstName = "Diana";
+            model.LastName = "Prince";
+            model.Age = 54;
+            model.ImageUrl = "~/images/dprince.jpg";
+
+            model.Address1 = "1200 Main Ave.";
+            model.Address2 = "Suite 300";
+            model.City = "New York City";
+            model.State = "NY";
+            model.ZipCode = 72172;
+
+            model.Interests = new List<string>{ "Writing", "Movies" };
+
+            return model;
+        }
+
+        public PersonViewModel CreateInvalidPersonViewModel()
+        {
+            var model = new PersonViewModel();
+
+            model.Age = 54;
+            model.ImageUrl = "~/images/dprince.jpg";
+
+            model.Address2 = "Suite 300";
+            model.City = "New York City";
+            model.State = "NY";
+            model.ZipCode = 72172;
+
+            model.Interests = new List<string> { "Writing", "Movies" };
+
+            return model;
         }
     }
 }

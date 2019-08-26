@@ -154,7 +154,7 @@ namespace PeopleSearch
                 LastName = "Wayne",
                 Age = 37,
                 AddressId = 1,
-                ImageUrl = "~/images/bwayne.jpg"
+                ImageUrl = "/images/bwayne.jpg"
             };
 
             var person2 = new Person
@@ -164,7 +164,7 @@ namespace PeopleSearch
                 LastName = "Danvers",
                 Age = 22,
                 AddressId = 2,
-                ImageUrl = "~/images/kdanvers.jpg"
+                ImageUrl = "/images/kdanvers.jpg"
             };
 
             var person3 = new Person
@@ -174,7 +174,7 @@ namespace PeopleSearch
                 LastName = "Prince",
                 Age = 54,
                 AddressId = 3,
-                ImageUrl = "~/images/dprince.jpg"
+                ImageUrl = "/images/dprince.jpg"
             };
 
             var person4 = new Person
@@ -184,7 +184,7 @@ namespace PeopleSearch
                 LastName = "Kent",
                 Age = 35,
                 AddressId = 4,
-                ImageUrl = "~/images/ckent.jpg"
+                ImageUrl = "/images/ckent.jpg"
             };
 
             var person5 = new Person
@@ -194,7 +194,7 @@ namespace PeopleSearch
                 LastName = "Gordon",
                 Age = 25,
                 AddressId = 5,
-                ImageUrl = "~/images/bgordon.jpg"
+                ImageUrl = "/images/bgordon.jpg"
             };
 
             modelBuilder.Entity<Person>().HasData(

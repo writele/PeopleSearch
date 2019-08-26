@@ -65,6 +65,42 @@ namespace PeopleSearch.Repositories
                 }
             };
 
+            _personinterests = new List<PersonInterest>()
+            {
+                new PersonInterest
+                {
+                    PersonId = 1,
+                    InterestId = 1,
+                    Interest = _interests
+                    .Where(x => x.InterestId == 1)
+                    .FirstOrDefault()
+                },
+                new PersonInterest
+                {
+                    PersonId = 1,
+                    InterestId = 4,
+                    Interest = _interests
+                    .Where(x => x.InterestId == 4)
+                    .FirstOrDefault()
+                },
+                new PersonInterest
+                {
+                    PersonId = 2,
+                    InterestId = 2,
+                    Interest = _interests
+                    .Where(x => x.InterestId == 2)
+                    .FirstOrDefault()
+                },
+                new PersonInterest
+                {
+                    PersonId = 2,
+                    InterestId = 3,
+                    Interest = _interests
+                    .Where(x => x.InterestId == 3)
+                    .FirstOrDefault()
+                }
+            };
+
             _persons = new List<Person>()
             {
                 new Person()
@@ -73,8 +109,13 @@ namespace PeopleSearch.Repositories
                     FirstName = "Bruce",
                     LastName = "Wayne",
                     Age = 37,
-                    Address = _addresses.Where(x => x.Id == 1).FirstOrDefault(),
-                    ImageUrl = "~/images/bwayne.jpg"
+                    Address = _addresses
+                    .Where(x => x.Id == 1)
+                    .FirstOrDefault(),
+                    ImageUrl = "~/images/bwayne.jpg",
+                    PersonInterests = _personinterests
+                    .Where(x => x.PersonId == 1)
+                    .ToList()
                 },
                 new Person
                 {
@@ -83,42 +124,19 @@ namespace PeopleSearch.Repositories
                     LastName = "Danvers",
                     Age = 22,
                     Address = _addresses.Where(x => x.Id == 2).FirstOrDefault(),
-                    ImageUrl = "~/images/kdanvers.jpg"
-                }
-            };
-
-            _personinterests = new List<PersonInterest>()
-            {
-                new PersonInterest
-                {
-                    PersonId = 1,
-                    InterestId = 1,
-                    Interest = _interests.Where(x => x.InterestId == 1).FirstOrDefault()
-                },
-                new PersonInterest
-                {
-                    PersonId = 1,
-                    InterestId = 4,
-                    Interest = _interests.Where(x => x.InterestId == 4).FirstOrDefault()
-                },
-                new PersonInterest
-                {
-                    PersonId = 2,
-                    InterestId = 2,
-                    Interest = _interests.Where(x => x.InterestId == 2).FirstOrDefault()
-                },
-                new PersonInterest
-                {
-                    PersonId = 2,
-                    InterestId = 3,
-                    Interest = _interests.Where(x => x.InterestId == 3).FirstOrDefault()
+                    ImageUrl = "~/images/kdanvers.jpg",
+                    PersonInterests = _personinterests
+                    .Where(x => x.PersonId == 2)
+                    .ToList()
                 }
             };
         }
 
         public Person Get(int id)
         {
-            return _persons.Where(x => x.PersonId == id).FirstOrDefault();
+            return _persons
+                .Where(x => x.PersonId == id)
+                .FirstOrDefault();
         }
 
         public List<Interest> GetInterests(int id)
@@ -142,25 +160,44 @@ namespace PeopleSearch.Repositories
             return _persons;
         }
 
-        public Person Add(Person person, Address address, List<Interest> interests)
+        public Person Add(PersonViewModel person)
         {
-            person.Address = address;
+            var newPerson = new Person();
+            newPerson.FirstName = person.FirstName;
+            newPerson.LastName = person.LastName;
+            newPerson.Age = person.Age;
+            newPerson.ImageUrl = person.ImageUrl;
 
-            foreach(var item in interests)
+            var newAddress = new Address();
+            newAddress.Address1 = person.Address1;
+            newAddress.Address2 = person.Address2;
+            newAddress.City = person.City;
+            newAddress.State = person.State;
+            newAddress.ZipCode = person.ZipCode;
+            _addresses.Add(newAddress);
+
+            newPerson.AddressId = newAddress.Id;
+
+
+            foreach(var item in person.Interests)
             {
                 _personinterests.Add(new PersonInterest()
                 {
-                    PersonId = person.PersonId,
-                    InterestId = item.InterestId,
-                    Interest = _interests.Where(x => x.InterestId == item.InterestId).FirstOrDefault()
+                    PersonId = newPerson.PersonId,
+                    InterestId = _interests
+                    .Where(x => x.Title == item)
+                    .FirstOrDefault().InterestId,
+                    Interest = _interests
+                    .Where(x => x.Title == item)
+                    .FirstOrDefault()
                 });
             }
             
             if(person != null && !string.IsNullOrEmpty(person.FirstName) && !string.IsNullOrEmpty(person.LastName))
             {
-                _persons.Add(person);
+                _persons.Add(newPerson);
 
-                return person;
+                return newPerson;
             }
 
             return null;

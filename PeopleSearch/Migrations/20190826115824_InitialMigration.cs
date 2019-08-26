@@ -17,7 +17,7 @@ namespace PeopleSearch.Migrations
                     Address2 = table.Column<string>(nullable: true),
                     City = table.Column<string>(nullable: true),
                     State = table.Column<string>(nullable: true),
-                    ZipCode = table.Column<int>(nullable: false)
+                    ZipCode = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -41,8 +41,7 @@ namespace PeopleSearch.Migrations
                 name: "Persons",
                 columns: table => new
                 {
-                    PersonId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    PersonId = table.Column<int>(nullable: false),
                     FirstName = table.Column<string>(maxLength: 80, nullable: false),
                     LastName = table.Column<string>(maxLength: 80, nullable: false),
                     Age = table.Column<int>(nullable: false),
@@ -53,8 +52,8 @@ namespace PeopleSearch.Migrations
                 {
                     table.PrimaryKey("PK_Persons", x => x.PersonId);
                     table.ForeignKey(
-                        name: "FK_Persons_Addresses_AddressId",
-                        column: x => x.AddressId,
+                        name: "FK_Persons_Addresses_PersonId",
+                        column: x => x.PersonId,
                         principalTable: "Addresses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -117,11 +116,11 @@ namespace PeopleSearch.Migrations
                 columns: new[] { "PersonId", "AddressId", "Age", "FirstName", "ImageUrl", "LastName" },
                 values: new object[,]
                 {
-                    { 1, 1, 37, "Bruce", "~/images/bwayne.jpg", "Wayne" },
-                    { 2, 2, 22, "Kara", "~/images/kdanvers.jpg", "Danvers" },
-                    { 3, 3, 54, "Diana", "~/images/dprince.jpg", "Prince" },
-                    { 4, 4, 35, "Clark", "~/images/ckent.jpg", "Kent" },
-                    { 5, 5, 25, "Barbara", "~/images/bgordon.jpg", "Gordon" }
+                    { 1, 1, 37, "Bruce", "/images/bwayne.jpg", "Wayne" },
+                    { 2, 2, 22, "Kara", "/images/kdanvers.jpg", "Danvers" },
+                    { 3, 3, 54, "Diana", "/images/dprince.jpg", "Prince" },
+                    { 4, 4, 35, "Clark", "/images/ckent.jpg", "Kent" },
+                    { 5, 5, 25, "Barbara", "/images/bgordon.jpg", "Gordon" }
                 });
 
             migrationBuilder.InsertData(
@@ -149,11 +148,6 @@ namespace PeopleSearch.Migrations
                 name: "IX_PersonInterests_InterestId",
                 table: "PersonInterests",
                 column: "InterestId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Persons_AddressId",
-                table: "Persons",
-                column: "AddressId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

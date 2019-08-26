@@ -21,7 +21,7 @@ namespace PeopleSearch.Migrations
 
             modelBuilder.Entity("PeopleSearch.Models.Address", b =>
                 {
-                    b.Property<int>("AddressId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -35,16 +35,16 @@ namespace PeopleSearch.Migrations
 
                     b.Property<int?>("ZipCode");
 
-                    b.HasKey("AddressId");
+                    b.HasKey("Id");
 
                     b.ToTable("Addresses");
 
                     b.HasData(
-                        new { AddressId = 1, Address1 = "1000 Wayne Manor Dr.", City = "Gotham", State = "NJ", ZipCode = 22222 },
-                        new { AddressId = 2, Address1 = "404 7th St.", Address2 = "Apt. 603", City = "National City", State = "WA", ZipCode = 54545 },
-                        new { AddressId = 3, Address1 = "1200 Main Ave.", Address2 = "Suite 300", City = "New York City", State = "NY", ZipCode = 72172 },
-                        new { AddressId = 4, Address1 = "1418 Trade St.", Address2 = "Apt 1606", City = "Metropolis", State = "PA", ZipCode = 72172 },
-                        new { AddressId = 5, Address1 = "1333 West Sharon St.", City = "Gotham", State = "NJ", ZipCode = 22244 }
+                        new { Id = 1, Address1 = "1000 Wayne Manor Dr.", City = "Gotham", State = "NJ", ZipCode = 22222 },
+                        new { Id = 2, Address1 = "404 7th St.", Address2 = "Apt. 603", City = "National City", State = "WA", ZipCode = 54545 },
+                        new { Id = 3, Address1 = "1200 Main Ave.", Address2 = "Suite 300", City = "New York City", State = "NY", ZipCode = 72172 },
+                        new { Id = 4, Address1 = "1418 Trade St.", Address2 = "Apt 1606", City = "Metropolis", State = "PA", ZipCode = 72172 },
+                        new { Id = 5, Address1 = "1333 West Sharon St.", City = "Gotham", State = "NJ", ZipCode = 22244 }
                     );
                 });
 
@@ -96,11 +96,11 @@ namespace PeopleSearch.Migrations
                     b.ToTable("Persons");
 
                     b.HasData(
-                        new { PersonId = 1, AddressId = 1, Age = 37, FirstName = "Bruce", ImageUrl = "~/images/bwayne.jpg", LastName = "Wayne" },
-                        new { PersonId = 2, AddressId = 2, Age = 22, FirstName = "Kara", ImageUrl = "~/images/kdanvers.jpg", LastName = "Danvers" },
-                        new { PersonId = 3, AddressId = 3, Age = 54, FirstName = "Diana", ImageUrl = "~/images/dprince.jpg", LastName = "Prince" },
-                        new { PersonId = 4, AddressId = 4, Age = 35, FirstName = "Clark", ImageUrl = "~/images/ckent.jpg", LastName = "Kent" },
-                        new { PersonId = 5, AddressId = 5, Age = 25, FirstName = "Barbara", ImageUrl = "~/images/bgordon.jpg", LastName = "Gordon" }
+                        new { PersonId = 1, AddressId = 1, Age = 37, FirstName = "Bruce", ImageUrl = "/images/bwayne.jpg", LastName = "Wayne" },
+                        new { PersonId = 2, AddressId = 2, Age = 22, FirstName = "Kara", ImageUrl = "/images/kdanvers.jpg", LastName = "Danvers" },
+                        new { PersonId = 3, AddressId = 3, Age = 54, FirstName = "Diana", ImageUrl = "/images/dprince.jpg", LastName = "Prince" },
+                        new { PersonId = 4, AddressId = 4, Age = 35, FirstName = "Clark", ImageUrl = "/images/ckent.jpg", LastName = "Kent" },
+                        new { PersonId = 5, AddressId = 5, Age = 25, FirstName = "Barbara", ImageUrl = "/images/bgordon.jpg", LastName = "Gordon" }
                     );
                 });
 

@@ -17,7 +17,9 @@ namespace PeopleSearch.Repositories
 
         public Person Get(int id)
         {
-            return _context.Persons.Where(x => x.PersonId == id).FirstOrDefault();
+            return _context.Persons
+                .Where(x => x.PersonId == id)
+                .FirstOrDefault();
         }
 
         public List<Interest> GetInterests(int id)
@@ -25,7 +27,7 @@ namespace PeopleSearch.Repositories
             return _context.Persons
                 .Where(p => p.PersonId == id)
                 .SelectMany(p => p.PersonInterests)
-                .Select(pc => pc.Interest)
+                .Select(pi => pi.Interest)
                 .ToList();
         }
 
@@ -41,26 +43,44 @@ namespace PeopleSearch.Repositories
             return _context.Persons.ToList();
         }
 
-        public Person Add(Person person, Address address, List<Interest> interests)
+        public Person Add(PersonViewModel person)
         {
-            person.Address = address;
+            var newPerson = new Person();
+            newPerson.FirstName = person.FirstName;
+            newPerson.LastName = person.LastName;
+            newPerson.Age = person.Age;
+            newPerson.ImageUrl = person.ImageUrl;
 
-            foreach (var item in interests)
+            var newAddress = new Address();
+            newAddress.Address1 = person.Address1;
+            newAddress.Address2 = person.Address2;
+            newAddress.City = person.City;
+            newAddress.State = person.State;
+            newAddress.ZipCode = person.ZipCode;
+            _context.Addresses.Add(newAddress);
+
+            newPerson.AddressId = newAddress.Id;
+
+            foreach (var item in person.Interests)
             {
                 _context.PersonInterests.Add(new PersonInterest()
                 {
-                    PersonId = person.PersonId,
-                    InterestId = item.InterestId,
-                    Interest = _context.Interests.Where(x => x.InterestId == item.InterestId).FirstOrDefault()
+                    PersonId = newPerson.PersonId,
+                    InterestId = _context.Interests
+                    .Where(x => x.Title == item)
+                    .FirstOrDefault().InterestId,
+                    Interest = _context.Interests
+                    .Where(x => x.Title == item)
+                    .FirstOrDefault()
                 });
             }
 
             if (person != null)
             {
-                _context.Persons.Add(person);
+                _context.Persons.Add(newPerson);
                 _context.SaveChanges();
 
-                return person;
+                return newPerson;
             }
 
             return null;

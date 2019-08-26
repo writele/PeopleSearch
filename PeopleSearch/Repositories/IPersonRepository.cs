@@ -16,6 +16,6 @@ namespace PeopleSearch.Repositories
 
         List<Person> GetAll();
 
-        Person Add(Person person, Address address, List<Interest> interests);
+        Person Add(PersonViewModel person);
     }
 }
