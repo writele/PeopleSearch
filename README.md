@@ -1,4 +1,4 @@
-# PeopleSearch
+# People Search
 
 This is a search application utilizing an API built on .Net Core and Angular on the front-end.
 
