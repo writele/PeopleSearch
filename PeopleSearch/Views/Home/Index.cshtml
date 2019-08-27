@@ -6,24 +6,40 @@
     window.data = @Html.Raw(string.IsNullOrEmpty(ModelJson) ? "{}" : ModelJson);
 </script>
 
-<h1>People Search</h1>
-
   <div ng-app="app" ng-controller="ctrl" id="app">
 
-  <form class="mainSearch-form" ng-submit="search()">
-    <input ng-model="query" type="text" name="query" placeholder="Search names" autocomplete="off" />
-    <button type="submit" href="#">Search</button>
-  </form>
+   <div class="container"> 
+       <div class="row">
+           <div class="col-md-12">
+              <h1>People Search</h1>
+              <form ng-submit="search()">
+                <input ng-model="query" type="text" name="query" placeholder="Search names" autocomplete="off" />
+                <button type="submit" href="#">Search</button>
+              </form>
+            </div>
+       <div class="row">
+    </div>
+    
+    <div class="container">
+        <mat-progress-spinner>
+        <div class="row person-row" ng-repeat="x in data">
+            <div class="col-md-6">                        
+                <h3>{{ x.firstName }} {{ x.lastName }}</h3>
+                <h5>Age: {{ x.age }}</h5>
+                <img src="{{ x.imageUrl }}" class="profile-img">
+            </div>
+            <div class="col-md-6">
+                <h4>Address</h4>
+                <p>{{ x.address1 }}</p>
+                <p>{{ x.address2  }}</p>
+                <p>{{ x.city }}, {{ x.state }} {{ x.zipCode }}</p>
+                <h4>Interests</h4>
+                <ul>
+                    <li ng-repeat="i in x.interests">{{ i }}</li>
+                </ul>
 
-    <ul>
-      <!-- display each art object using ng-repeat directive -->
-      <li ng-repeat="x in data">
-        <img src="{{ x.imageUrl }}" class="profile-img">
-        <h4>{{ x.firstName }} {{ x.lastName }}</h4>
-        <p>Age: {{ x.age }}</p>
-        <p><span ng-repeat="i in x.interests">{{ i }}</span></p>
-      </li>
-    </ul>
+            </div>
+        </div>
 
-
+    </div>
   </div>

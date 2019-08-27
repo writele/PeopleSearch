@@ -20,20 +20,18 @@ namespace PeopleSearch.Controllers
             _repository = repository;
         }
 
-        // GET: api/Person
-        [HttpGet]
-        public List<PersonViewModel> Get()
-        {
-            var persons = PopulatePersonViewModels(_repository.GetAll());
-            return persons;
-        }
-
         // GET: api/Person?query=
+        [HttpGet]
         public List<PersonViewModel> Get(string query)
         {
-            var persons = _repository.GetAll().Where(x => x.FirstName.Contains(query) || x.LastName.Contains(query)).ToList();
+            var persons = PopulatePersonViewModels(_repository.GetAll());
 
-            return PopulatePersonViewModels(persons);
+            if (!string.IsNullOrEmpty(query))
+            {
+                persons = persons.Where(x => x.FirstName.ToLower().Contains(query) || x.LastName.ToLower().Contains(query)).ToList();
+            }
+            
+            return persons;
         }
 
         // POST: api/Person
