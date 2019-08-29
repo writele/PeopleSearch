@@ -143,8 +143,27 @@ namespace PeopleSearch
                 ZipCode = 22244
             };
 
+            var address6 = new Address
+            {
+                Id = 6,
+                Address1 = "300 MLK Blvd.",
+                Address2 = "Apt 1602",
+                City = "Central City",
+                State = "CA",
+                ZipCode = 77777
+            };
+
+            var address7 = new Address
+            {
+                Id = 7,
+                Address1 = "2600 Ocean Ave",
+                City = "Coast City",
+                State = "WA",
+                ZipCode = 51255
+            };
+
             modelBuilder.Entity<Address>().HasData(
-                address1, address2, address3, address4, address5
+                address1, address2, address3, address4, address5, address6, address7
             );
 
             var person1 = new Person
@@ -197,8 +216,28 @@ namespace PeopleSearch
                 ImageUrl = "/images/bgordon.jpg"
             };
 
+            var person6 = new Person
+            {
+                PersonId = 6,
+                FirstName = "Barry",
+                LastName = "Allen",
+                Age = 27,
+                AddressId = 6,
+                ImageUrl = "/images/ballen.jpg"
+            };
+
+            var person7 = new Person
+            {
+                PersonId = 7,
+                FirstName = "John",
+                LastName = "Stewart",
+                Age = 34,
+                AddressId = 7,
+                ImageUrl = "/images/jstewart.jpg"
+            };
+
             modelBuilder.Entity<Person>().HasData(
-                person1, person2, person3, person4, person5
+                person1, person2, person3, person4, person5, person6, person7
             );
 
             modelBuilder.Entity<PersonInterest>()
@@ -220,7 +259,14 @@ namespace PeopleSearch
                 new PersonInterest { PersonId = 4, InterestId = 8 },
 
                 new PersonInterest { PersonId = 5, InterestId = 1 },
-                new PersonInterest { PersonId = 5, InterestId = 8 }
+                new PersonInterest { PersonId = 5, InterestId = 8 },
+
+                new PersonInterest { PersonId = 6, InterestId = 1 },
+                new PersonInterest { PersonId = 6, InterestId = 8 },
+                new PersonInterest { PersonId = 6, InterestId = 2 },
+                new PersonInterest { PersonId = 6, InterestId = 4 },
+
+                new PersonInterest { PersonId = 7, InterestId = 4 }
                 );
         }
     }

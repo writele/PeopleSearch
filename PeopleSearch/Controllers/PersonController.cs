@@ -24,22 +24,15 @@ namespace PeopleSearch.Controllers
         [HttpGet]
         public List<PersonViewModel> Get(string query)
         {
-            var persons = PopulatePersonViewModels(_repository.GetAll());
+            List<PersonViewModel> persons = PopulatePersonViewModels(_repository.GetAll());
 
             if (!string.IsNullOrEmpty(query))
             {
-                persons = persons.Where(x => x.FirstName.ToLower().Contains(query) || x.LastName.ToLower().Contains(query)).ToList();
+                persons = persons.Where(x => x.FirstName.ToLower().Contains(query.ToLower()) || x.LastName.ToLower().Contains(query.ToLower())).ToList();
             }
             
             return persons;
         }
-
-        // POST: api/Person
-        //[HttpPost]
-        //public void Post(PersonViewModel person)
-        //{
-        //    _repository.Add(person.Person, person.Address, person.Interests);
-        //}
 
         public List<PersonViewModel> PopulatePersonViewModels(ICollection<Person> persons)
         {
@@ -53,14 +46,14 @@ namespace PeopleSearch.Controllers
                 personVM.Age = person.Age;
                 personVM.ImageUrl = person.ImageUrl;
 
-                var address = _repository.GetAddress(person.PersonId);
+                Address address = _repository.GetAddress(person.PersonId);
                 personVM.Address1 = address.Address1;
                 personVM.Address2 = address.Address2;
                 personVM.City = address.City;
                 personVM.State = address.State;
                 personVM.ZipCode = address.ZipCode;
 
-                var interests = _repository.GetInterests(person.PersonId);
+                List<Interest> interests = _repository.GetInterests(person.PersonId);
 
                 if (interests.Any())
                 {

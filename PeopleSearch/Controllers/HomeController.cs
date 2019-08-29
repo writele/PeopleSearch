@@ -5,31 +5,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PeopleSearch.Models;
+using PeopleSearch.Repositories;
 
 namespace PeopleSearch.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IPersonRepository _repository;
+
+        public HomeController(IPersonRepository repository)
+        {
+            _repository = repository;
+        }
         public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult About()
-        {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
-        }
-
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
-
-        public IActionResult Privacy()
         {
             return View();
         }

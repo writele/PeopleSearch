@@ -31,6 +31,11 @@ namespace PeopleSearch.Repositories
                 .ToList();
         }
 
+        public List<string> GetInterests()
+        {
+            return _context.Interests.Select(x => x.Title).ToList();
+        }
+
         public Address GetAddress(int id)
         {
             return _context.Addresses

@@ -12,6 +12,8 @@ namespace PeopleSearch.Repositories
 
         List<Interest> GetInterests(int id);
 
+        List<string> GetInterests();
+
         Address GetAddress(int id);
 
         List<Person> GetAll();

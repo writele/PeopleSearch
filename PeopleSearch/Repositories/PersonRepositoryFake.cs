@@ -148,6 +148,11 @@ namespace PeopleSearch.Repositories
                 .ToList();
         }
 
+        public List<string> GetInterests()
+        {
+            return _interests.Select(x => x.Title).ToList();
+        }
+
         public Address GetAddress(int id)
         {
             return _addresses
